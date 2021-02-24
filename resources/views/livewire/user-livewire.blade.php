@@ -198,7 +198,8 @@
 
                         <div class="form-group">
                             <label for="">imagen</label>
-                            <input type="file" name="photo">
+                            <input type="file" wire:model="photo" >
+                        @error('photo') <span class="error">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <input type="hidden" wire:model="user_id">

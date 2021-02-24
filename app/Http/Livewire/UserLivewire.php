@@ -124,7 +124,6 @@ class UserLivewire extends Component
         // $usuario es la consulta cuando cumple id
         $usuario->name= $this->name;
        $usuario->email= $this->email;
-
         if ($this->photo != '') {
             $file=$this->photo;
             $name = time().$file->getClientOriginalName();

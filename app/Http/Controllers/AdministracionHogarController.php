@@ -255,31 +255,6 @@ class AdministracionHogarController extends Controller
                 
             }
 
-
-            /*
-              DELETE FROM `consumos` WHERE administracion_id=57;
-               INSERT INTO `consumos` (`id_consumo`, `consumo`, `fechaConsumo`, `created_at`,
-                `updated_at`, `administracion_id`) VALUES 
-                (NULL, '0', '2020-06-06', '2020-06-09 13:00:09', '2020-03-16 10:30:25', '57');
-
-                DELETE FROM `consumos` WHERE administracion_id=56;
-               INSERT INTO `consumos` (`id_consumo`, `consumo`, `fechaConsumo`, `created_at`,
-                `updated_at`, `administracion_id`) VALUES 
-                (NULL, '0', '2020-06-06', '2020-06-09 13:00:09', '2020-03-16 10:30:25', '56');
-
-                UPDATE `almacenamientos` SET `capacidadAlmacenamiento` = '500' 
-                WHERE `almacenamientos`.`id_almacenamiento` = 8;
-                 DELETE FROM `consumos` WHERE administracion_id=36;
-               INSERT INTO `consumos` (`id_consumo`, `consumo`, `fechaConsumo`, `created_at`,
-                `updated_at`, `administracion_id`) VALUES 
-                (NULL, '0', '2020-06-06', '2020-06-09 13:00:09', '2020-03-16 10:30:25', '36');
-                DELETE FROM `consumos` WHERE administracion_id=43;
-               INSERT INTO `consumos` (`id_consumo`, `consumo`, `fechaConsumo`, `created_at`,
-                `updated_at`, `administracion_id`) VALUES 
-                (NULL, '0', '2020-06-06', '2020-06-09 13:00:09', '2020-03-16 10:30:25', '43');
-                
-             */
-
         //set_time_limit(100);
         // consulta el consumo de todos los dispositivos de servicio - h2ome y empo 
          /*
