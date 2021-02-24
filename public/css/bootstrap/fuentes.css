@@ -1,0 +1,9 @@
+@font-face{
+    font-family:coolvetica;
+    src: url(coolveticarg.ttf);
+    }
+    h1{
+    font-family: coolvetica;
+    //font-size: 3.5vw;
+    font-size: calc(1rem + 1vw);
+    }
