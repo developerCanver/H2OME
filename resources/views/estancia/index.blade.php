@@ -188,43 +188,17 @@
                         <input type="text" class="form-control" name="destinoEstancia"
                             value="{{$estancia->destinoEstancia}}">
                     </div>
-                    {{-- <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="recipient-name" class="col-form-label">Tipo Dispositivo:</label>
-
-                            <select class="form-control" name="tipoSensor_id">
-                                @foreach ($tipoSensores as $tipoSensor)
-                                <option value="{{$tipoSensor->id_tipoSensor}}">{{$tipoSensor->nombreTipoSensor}}
-                    </option>
-
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-16">
-                        <label for="recipient-name" class="col-form-label"> Dispositivo:</label>
-                        <select class="form-control" name="dispositivo_id">
-                            @foreach ($dispositivos as $dispositivo)
-                            <option value="{{$dispositivo->id_dispositivo}}">
-                                {{$dispositivo->nombreDispositivo}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
 
                 </div>
+                <input type="hidden" class="form-control" name="hogar_id" value="{{$hogar->id_hogar}}">
 
-        </div> --}}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <input type="hidden" class="form-control" name="hogar_id" value="{{$hogar->id_hogar}}">
-
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </div>
-    </form>
-</div>
-</div>
 </div>
 
 @endforeach
