@@ -102,8 +102,8 @@
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="{{ url('hogar')}}">Hogar</a>
                         @if ( Auth::user()->id_tipo!="1" )
-                        <a class="collapse-item" href="{{ url('factura')}}">Factura</a>
-                        <a class="collapse-item" href="{{ url('estancia')}}">Estancia</a>
+                        <a class="collapse-item" href="{{ url('mifactura')}}">Factura</a>
+                        <a class="collapse-item" href="{{ url('miestancia')}}">Estancia</a>
                         @endif
                     </div>
                 </div>

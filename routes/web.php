@@ -14,6 +14,7 @@ Route::get('/usuarios', function () {
 Route::resource('userTipo', 'UserTipoController');
 Route::resource('hogar', 'HogarController');
 
+Route::get('/mifactura', 'FacturaController@mifactura');
 Route::get('factura/{id}', 'FacturaController@index');
 Route::post('/factura/create', 'FacturaController@store');
 Route::resource('factura', 'FacturaController');
