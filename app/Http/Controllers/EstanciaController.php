@@ -98,7 +98,8 @@ class EstanciaController extends Controller
         //almacenas la foranea de estancia id con la promaria de estancia en admininistracion
         $administracion = new administracion(); 
         $ultimo_id = estancia::latest('id_estancia')->first();
-        $fechaAdministracion = now()->toDateString();
+        //$fechaAdministracion = now()->toDateString();= date("Y-m-d H:i:s"); 
+        $fechaAdministracion = date("Y-m-d H:i:s"); 
 
         $administracion->estancia_id = ($ultimo_id->id_estancia);
         $administracion->estado ='0';

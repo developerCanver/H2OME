@@ -13,7 +13,8 @@
 	$mes=date("m");
 	$año=date("Y");
 
-	$hoy=$año."-".$mes."-".$dia;
+	//$hoy=$año."-".$mes."-".$dia;
+	$hoy = date("Y-m-d H:i:s"); 
 
 $conexion = mysqli_connect('localhost', 'root', '','h2ome');
 mysqli_query($conexion, "SET NAMES 'utf8");
@@ -46,9 +47,14 @@ mysqli_close($conexion);
 */
 /*
 INSERT INTO `consumos` ( `consumo`, `fechaConsumo`, `created_at`, `updated_at`, `administracion_id`) VALUES
-( 0.00, '2020-10-17', '2020-10-17 06:03:08', '2020-10-17 06:03:08', 67),
-( 0.00, '2020-10-17', '2020-10-17 06:04:01', '2020-10-17 06:04:01', 68),
-( 0.00, '2020-10-17', '2020-10-17 06:04:26', '2020-10-17 06:04:26', 69);
+( 0.00, '2020-10-17', '2020-10-17 06:03:08', '2020-10-17 06:03:08', 72),
+( 50, '2020-10-17', '2020-10-17 06:04:01', '2020-10-17 06:04:01', 71),
+( 50, '2020-10-17', '2020-10-17 06:04:26', '2020-10-17 06:04:26', 70);
+
+
+70=senor cocina
+71=empo
+72=H2ome
 
 SELECT sum(consumo)
 FROM consumos

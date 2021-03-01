@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 use Livewire\WithPagination;
@@ -21,6 +21,8 @@ class UserLivewire extends Component
     use WithPagination;
     use WithFileUploads;
 
+    use AuthorizesRequests;
+
     protected $paginationTheme = 'bootstrap';
 
     public $search='';
@@ -28,18 +30,29 @@ class UserLivewire extends Component
     public $name,$email,$photo,$password,$id_tipo;
 
 
-
     public function render()
     {
+       
+                    // $users= User::search($this->search)   
+                    // ->where("id","!=",1)
+                    // ->orderBy('id','asc')
+                    // ->paginate(5);
+                    // return view('livewire.user-livewire', ['users' => $users]);
+                    $user = Auth::user()->id;
+                    if ($user==1) {
+                        $users= User::search($this->search)   
+                        ->where("id","!=",1)
+                        ->orderBy('id','asc')
+                        ->paginate(5);
+                    }else{
+                        $users= User::search($this->search)   
+                        ->where("id","=",$user)
+                        ->orderBy('id','asc')
+                        ->paginate(5);
+                    }
+                          
+                                return view('livewire.user-livewire', ['users' => $users]);
  
-                    $query = 'prueba';
-                    $users= User::search($this->search)   
-                    ->where("id","!=",1)
-                    ->orderBy('id','asc')
-                    ->paginate(5);
-                    return view('livewire.user-livewire', ['users' => $users]);
-                
-    
    
        // return view('livewire.user-livewire');
     }
@@ -102,6 +115,15 @@ class UserLivewire extends Component
     
     }
 
+    
+    public function cancel(){
+        $this->photo == '';
+        $this->name == '';
+        $this->email == '';       
+       
+    }
+
+
     public function destroy($id){
         //
         $usuario = User::findOrFail($id);
@@ -118,8 +140,8 @@ class UserLivewire extends Component
         $this->name = $user->name;
         $this->email = $user->email;
     }
-    public function update($id){
 
+    public function update($id){
         $usuario =  User::findOrFail($id);
         // $usuario es la consulta cuando cumple id
         $usuario->name= $this->name;

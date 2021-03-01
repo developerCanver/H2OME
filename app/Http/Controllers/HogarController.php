@@ -28,8 +28,12 @@ class HogarController extends Controller
                }
             
         }else{
-            $hogar = Hogar::where('usuario_id','=',$user)->firstOrFail();
-        return view('hogar.index',['hogar'=> $hogar, 'user'=>$user]);
+            $query = trim($request->get('search'));
+            $hogar =  $hogares= Hogar::where('nombreHogar','LIKE', '%'. $query .'%')
+            ->orderBy('id_hogar','asc')
+            
+            ->where('usuario_id','=',$user)->paginate(5);
+        return view('hogar.index',['hogares'=> $hogar, 'user'=>$user,'search'=>$query]);
         }
         
     }

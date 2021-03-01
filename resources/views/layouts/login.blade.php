@@ -1,4 +1,4 @@
-<title>Material Login Form a Responsive Widget Template :: w3layouts</title>
+<title>h2OME</title>
 <!-- meta tags -->
 <meta charset="UTF-8" />
 <link rel="icon" type="img/png" href="{{ asset('img/favicon.png')}}">

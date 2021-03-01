@@ -7,9 +7,9 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/usuarios', function () {
     return view('usuarios.index');
-});
+})->middleware('auth');
 
-//Route::resource('usuarios', 'UserController');
+//Route::resource('usuarios', 'UserController')->middleware('auth');
 // Route::resource('/usuarios/perfil', 'UserController@perfil');
 Route::resource('userTipo', 'UserTipoController');
 Route::resource('hogar', 'HogarController');

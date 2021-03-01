@@ -16,7 +16,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">imagen</label>
-                        <input type="file" wire:model="photo" >
+                        <input type="file" wire:model="photo">
                         @error('photo') <span class="error">{{ $message }}</span> @enderror
                     </div>
 
@@ -32,7 +32,7 @@
 
                         <select wire:model="id_tipo" id="id_tipo">
                             {{-- <option selected="selected" disabled>-- Select --</option> --}}
-                            <option value="2">User</option>
+                            <option value="2">Usuario</option>
                             <option value="1">Admin</option>
 
 
@@ -45,7 +45,6 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" wire:model="password" class="form-control" name="password">
-
                     </div>
 
                     <button type="submit" wire:click="store" class="btn btn-primary">Registrar</button>
@@ -113,7 +112,7 @@
                 @if ( Auth::user()->id_tipo=="1" )
                 <h2>
                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                        data-target="#exampleModal" data-whatever="@mdo">Agregar user</button>
+                        data-target="#exampleModal" data-whatever="@mdo">Agregar usuario</button>
 
                 </h2>
                 @else
@@ -147,6 +146,7 @@
         <thead>
             <tr>
                 <th scope="col">Codigo</th>
+                <th scope="col">imagen</th>
                 <th scope="col">Nombres</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Opciones</th>
@@ -155,51 +155,51 @@
         </thead>
         <tbody>
             {{-- foreach espara recorrer el cilco de cuantos usuarios se tiene en la base de datos
-       $users es la variable que traigo del controlador y recooro con la variable 
-       que creo user  --}}
+            $users es la variable que traigo del controlador y recooro con la variable 
+            que creo user  --}}
             @foreach ($users as $user)
             <tr>
                 <th scope="row">{{$user->id}}</th>
+                <td> <img src="/img/users/{{$user->photo}}" class="card-img-top mx-auto d-block" style="width: 50px;">
+                </td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>
 
-
-
-                   
-                    <button data-toggle="modal" data-target="#updateModal" wire:click="edit({{ $user->id }})" class="btn btn-primary btn-sm">Edit</button>
-                    
+                    <button data-toggle="modal" data-target="#updateModal{{$user->id}}" wire:click="edit({{ $user->id }})"
+                        class="btn btn-primary btn-sm"><i class="far fa-edit"></i></button>
 
                     @if ( Auth::user()->id_tipo=="1" )
                     <button onclick="MuestraAlert({{$user->id}})" class="btn btn-danger btn-sm">
-                        Eliminar
+                        <i class="fas fa-trash"></i>
                     </button>
                     @endif
 
                 </td>
+                
             </tr>
             @endforeach
         </tbody>
     </table>
 
     {{-- modal para editar cada tarjeta--}}
-    <div wire:ignore.self class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="updateModal{{$user->id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-           <div class="modal-content">
-            <div class="modal-header p-3 mb-2 bg-primary text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <div class="modal-content">
+                <div class="modal-header p-3 mb-2 bg-primary text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <form>
-                        <img src="/img/users/{{$user->photo}}" class="card-img-top mx-auto d-block" style="width: 200px;">
 
                         <div class="form-group">
                             <label for="">imagen</label>
-                            <input type="file" wire:model="photo" >
-                        @error('photo') <span class="error">{{ $message }}</span> @enderror
+                            <input type="file" wire:model="photo">
+                            @error('photo') <span class="error">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <input type="hidden" wire:model="user_id">
@@ -215,45 +215,47 @@
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" wire:model="password" class="form-control" name="password">
-    
+
                         </div>
-                      
+
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click.prevent="cancel()" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click.prevent="update({{$user->id}})" class="btn btn-primary" data-dismiss="modal">Actualizar</button>
+                    <button type="button" wire:click.prevent="cancel()" class="btn btn-secondary"
+                        data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:click.prevent="update({{$user->id}})" class="btn btn-primary"
+                        data-dismiss="modal">Actualizar</button>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
-        {{-- FIN ACTUALIZAR USUARIO  --}}
+    {{-- FIN ACTUALIZAR USUARIO  --}}
 
-        <div class="row">
-            <div class="mx-auto">
-                {{ $users->links() }}
-                {{-- PAGINACION CON EL METODO LINKS --}}
-            </div>
-
+    <div class="row">
+        <div class="mx-auto">
+            {{ $users->links() }}
+            {{-- PAGINACION CON EL METODO LINKS --}}
         </div>
 
-        <script>
-            function MuestraAlert(id) {
-                Swal.fire({
-                    title: 'Esta seguro de eliminar ID ' + id + '?',
-                    text: "Una vez borrado, no se podrá deshacer los cambios!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonText: 'Continuar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        //console.log(id); 
-                        @this.destroy(id);
-                    }
-                })
-            }
+    </div>
 
-        </script>
+    <script>
+        function MuestraAlert(id) {
+            Swal.fire({
+                title: 'Esta seguro de eliminar ID ' + id + '?',
+                text: "Una vez borrado, no se podrá deshacer los cambios!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Continuar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //console.log(id); 
+                    @this.destroy(id);
+                }
+            })
+        }
+
+    </script>
