@@ -6,6 +6,8 @@ use App\dispositivo;
 use App\tipoSesor;
 use Illuminate\Http\Request;
 use App\tipoSensor;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class DispositivoController extends Controller
 {
     public function __construct(){
@@ -31,11 +33,28 @@ class DispositivoController extends Controller
             } 
     }
 
-   
-    public function create()
+    public function misensores()
     {
-        //
+            //$dispositivos = dispositivo::all();
+            $tipoSensores = tipoSensor::all();
+            $user = Auth::user()->id;
+
+             $dispositivos = DB::table('dispositivos')
+           ->join('estancias', 'estancias.dispositivo_id', '=', 'dispositivos.id_dispositivo')
+           ->join('hogars', 'hogars.id_hogar', '=', 'estancias.hogar_id')
+           ->join('users', 'users.id', '=', 'hogars.usuario_id')
+           ->where('users.id','=',$user)
+           ->get() ;
+
+           //dd($dispositivos);
+
+            
+    
+              // return view('dispositivo.index', ['dispositivos' => $dispositivos, 'search'=>$query, 'tipoSensores'=>$tipoSensores]);
+              return view('dispositivo.index', ['dispositivos' => $dispositivos, 'tipoSensores'=>$tipoSensores]);
+            
     }
+
 
    
     public function store(Request $request)
@@ -55,18 +74,7 @@ class DispositivoController extends Controller
          return redirect('/sensores');
     }
 
-    public function show(dispositivo $dispositivo)
-    {
-        //
-    }
-
-    
-    public function edit(dispositivo $dispositivo)
-    {
-        //
-    }
-
-   
+ 
     public function update(Request $request, $id_dispositivo)
     {
         $dispositivo =  dispositivo::findOrFail($id_dispositivo);

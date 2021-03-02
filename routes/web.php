@@ -19,14 +19,14 @@ Route::get('factura/{id}', 'FacturaController@index');
 Route::post('/factura/create', 'FacturaController@store');
 Route::resource('factura', 'FacturaController');
 
-
+Route::get('/miconsumo', 'ConsumoController@miconsumo');
 Route::get('consumo/{id}', 'ConsumoController@index');
 Route::resource('consumo', 'ConsumoController');
 //Route::patch('consumo/{id}', 'ConsumoController@index')->name('consumo.index');
 
 //Route::patch('misvistas/docente/{id}', 'DocenteController@actualizarusuario');
 //Route::patch('misvistas/docente/{id}', 'DocenteController@actualizarusuario')->name('docente.actualizarusuario');
-
+Route::get('/miestancia', 'EstanciaController@miestancia');
 Route::get('estancia/{id}', 'EstanciaController@index');
 Route::post('/estancia/create', 'EstanciaController@store');
 Route::resource('estancia', 'EstanciaController');
@@ -35,6 +35,8 @@ Route::resource('estancia', 'EstanciaController');
 //otra dorma es en el controllores
 Route::resource('tipoSensor', 'TipoSensorController');
 Route::post('/tipoSensor/create', 'TipoSensorController@store');
+
+Route::get('/misensores', 'DispositivoController@misensores');
 Route::resource('sensores', 'DispositivoController');
 Route::post('/sensores/create', 'DispositivoController@store');
 

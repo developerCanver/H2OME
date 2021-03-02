@@ -2,12 +2,19 @@
 
 @section('content')
 <div class="container">
-    <h2>Sensor
+   
 
-
+        @if ( Auth::user()->id_tipo=="1" )
+        <h2>Sensores                  
         <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal"
             data-whatever="@mdo">Agregar Sensor</button>
-    </h2>
+        </h2>       
+            
+        @else            
+        <h2>Sensores instalados en mi hogar</h2>          
+    
+        @endif
+  
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -111,7 +118,7 @@
                     <h6 class="card-title">Des:</h6>
                     <p class="card-text">{{$dispositivo->descripcionDispositivo}}.</p>
 
-
+                    @if ( Auth::user()->id_tipo=="1" )
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#editdispositivo{{$dispositivo->id_dispositivo}}" data-whatever="@mdo"><i
                             class="fas fa-edit"></i></button>
@@ -119,6 +126,7 @@
                     <button type="submit" class="btn btn-danger">
                         <i class="far fa-trash-alt"></i>
                     </button>
+                    @endif
         </form>
 
 
@@ -126,7 +134,7 @@
 
     </div>
     <div class="card-footer text-muted">
-        <p class="card-text">{{$dispositivo->fechadispositivo}}.</p>
+      
     </div>
 </div>
 
@@ -175,31 +183,7 @@
                                     <option value="0">No</option>
                                     <option value="1">Si</option>
                                 </select>
-                                {{-- <select class="form-control"  name="tipoSensor_id">
-                                        @foreach ($tipoSensores as $tipoSensor)
-                                            @if ($dispositivo->nombreDispositivo==$tipoSensor->nombreTipoSensor)
-                                            <option value="{{$tipoSensor->id_tipoSensor}}
-                                select">{{$tipoSensor->nombreTipoSensor}}
-                                @else
-                                <option value="{{$tipoSensor->id_tipoSensor}}">{{$tipoSensor->nombreTipoSensor}}
-                                    @endif
-
-                                </option>
-
-                                @endforeach
-
-                                </select> --}}
-
-                                {{-- <select class="form-control" name="tipoSensor_id">
-                                        <option value="">-- PILIH --</option>
-                                        @foreach($tipoSensores as $id => $nama)
-                                            @if(old('tipoSensor_id', $id->nombreTipoSensor) == $id )
-                                            <option value="{{ $id }}" selected>{{ $nama }}</option>
-                                @else
-                                <option value="{{ $id }}">{{ $nama }}</option>
-                                @endif
-                                @endforeach
-                                </select> --}}
+                               
                             </div>
                         </div>
                         <div class="form-group">

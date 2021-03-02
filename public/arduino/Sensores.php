@@ -13,25 +13,25 @@
 	$mes=date("m");
 	$año=date("Y");
 
-	//$hoy=$año."-".$mes."-".$dia;
-	$hoy = date("Y-m-d H:i:s"); 
+	$hoy=$año."-".$mes."-".$dia;
+	$created_at = date("Y-m-d H:i:s"); 
 
 $conexion = mysqli_connect('localhost', 'root', '','h2ome');
 mysqli_query($conexion, "SET NAMES 'utf8");
 
 
 if (($empo==0) && ($h2ome!=0)){
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '67');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$empo', '$hoy', '68');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '69');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '$created_at', '67');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$empo', '$hoy', '$created_at', '68');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '$created_at', '69');" );
 }else if (($h2ome==0) && ($empo!=0)) {
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$empo', '$hoy', '67');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$empo', '$hoy', '68');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '69');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$empo', '$hoy', '$created_at', '67');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$empo', '$hoy', '$created_at', '68');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy','$created_at',  '69');" );
 } elseif (($h2ome==0) && ($empo==0)) {
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '67');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '68');" );
-	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '69');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '$created_at', '67');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '$created_at', '68');" );
+	mysqli_query($conexion, "INSERT INTO `consumos`( `consumo`, `fechaConsumo`, `created_at`, `administracion_id`) VALUES ( '$h2ome', '$hoy', '$created_at', '69');" );
 }
 mysqli_query($conexion, "UPDATE `almacenamientos` SET nivel= '$nivel'  WHERE hogar_id=33" );
 

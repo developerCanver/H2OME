@@ -6,6 +6,8 @@ use App\consumo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Auth;
+
 class ConsumoController extends Controller
 {
     public function __construct(){
@@ -82,6 +84,73 @@ class ConsumoController extends Controller
         }
 
     }
+    public function miconsumo(){
+
+        $id = Auth::user()->id;
+      //consumo promedio factura
+          $sqlFactura = 'SELECT usuario_id,id_factura, medidor, codigo, consumoPromedio, (saldoPromedio), 
+           fechaFactura,hogar_id FROM facturas
+           inner join  hogars on facturas.hogar_id = hogars.id_hogar 
+            WHERE usuario_id='.$id;
+         $consumoFactura = DB::select($sqlFactura);
+
+      
+          $sql = 'SELECT id_consumo, consumo,fechaConsumo,capacidadAlmacenamiento,nivel,administracion_id,
+          id_hogar,id_almacenamiento,numeroGrifos,maximo,minimo,media
+          FROM
+          consumos
+          inner join administracions on  consumos.administracion_id=administracions.id_administracion
+          inner join estancias	 on administracions.estancia_id=estancias.id_estancia
+          inner join hogars on estancias.hogar_id=hogars.id_hogar        
+          inner join almacenamientos on hogars.id_hogar=almacenamientos.hogar_id
+          inner join stocks on almacenamientos.id_almacenamiento=stocks.almacenamiento_id
+          inner join dispositivos on estancias.dispositivo_id=dispositivos.id_dispositivo
+          inner join tipo_sensors on dispositivos.tipoSensor_id=tipo_sensors.id_tipoSensor
+          WHERE 
+           id_tipoSensor!=4 and id_tipoSensor!=5 AND usuario_id='.$id;
+         $consumos = DB::select($sql);
+
+
+         $sqlCunsumoH2ome='SELECT  (sum(consumo))consumo
+          FROM
+          consumos
+          inner join administracions on  consumos.administracion_id=administracions.id_administracion
+          inner join estancias	 on administracions.estancia_id=estancias.id_estancia
+          inner join hogars on estancias.hogar_id=hogars.id_hogar        
+          inner join almacenamientos on hogars.id_hogar=almacenamientos.hogar_id
+          inner join stocks on almacenamientos.id_almacenamiento=stocks.almacenamiento_id
+          inner join dispositivos on estancias.dispositivo_id=dispositivos.id_dispositivo
+          inner join tipo_sensors on dispositivos.tipoSensor_id=tipo_sensors.id_tipoSensor
+          WHERE 
+           id_tipoSensor=4 AND usuario_id='.$id;
+         $CunsumoH2ome = DB::select($sqlCunsumoH2ome);
+
+
+         $sqlCunsumoEmpo='SELECT (sum(consumo))consumo
+          FROM
+          consumos
+          inner join administracions on  consumos.administracion_id=administracions.id_administracion
+          inner join estancias	 on administracions.estancia_id=estancias.id_estancia
+          inner join hogars on estancias.hogar_id=hogars.id_hogar        
+          inner join almacenamientos on hogars.id_hogar=almacenamientos.hogar_id
+          inner join stocks on almacenamientos.id_almacenamiento=stocks.almacenamiento_id
+          inner join dispositivos on estancias.dispositivo_id=dispositivos.id_dispositivo
+          inner join tipo_sensors on dispositivos.tipoSensor_id=tipo_sensors.id_tipoSensor
+          WHERE 
+           id_tipoSensor=5 AND usuario_id='.$id;
+         $CunsumoEmpo = DB::select($sqlCunsumoEmpo);
+
+
+         // return view('consumo.index',['estancias' => $estancias, 'hogar' => $hogar, 'dispositivos' => $dispositivos, 'tipoSensores' => $tipoSensores]);
+          return view('consumo.index',['consumos' => $consumos,'CunsumoH2ome' => $CunsumoH2ome,
+          'CunsumoEmpo' => $CunsumoEmpo, 'consumoFactura' => $consumoFactura]);
+
+        
+      
+
+
+    }
+    
     
     public function store(Request $request)
     {

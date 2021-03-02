@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 
-
+    @if ( Auth::user()->id_tipo=="1" )
     <ul class="nav nav-pills justify-content-center">
         <li class="nav-item">
             <a class="nav-link active" href="{{route('estancia.index',  ['tags_id' => $hogar->id_hogar]) }}">
@@ -21,6 +21,7 @@
             </a>
         </li>
     </ul>
+    @endif
 
 
     <h2>Estancia
