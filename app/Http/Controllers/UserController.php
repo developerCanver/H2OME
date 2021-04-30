@@ -42,10 +42,7 @@ class UserController extends Controller
                 return view('usuarios.index', ['users' => $users, 'search'=>$query]);
 
             }
-        }
-   
-
-
+        }  
     }
 
 
@@ -53,9 +50,7 @@ class UserController extends Controller
     {
          $user = UserTipo::all();
         // $user es el array de toso los datos traidos 
-
-        return view('usuarios.create',['usersTipo'=>$user]);
-        
+        return view('usuarios.create',['usersTipo'=>$user]);        
     }
 
      //almacenar los registro recien creados en la base de datos

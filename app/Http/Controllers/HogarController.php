@@ -38,22 +38,6 @@ class HogarController extends Controller
         
     }
 
-    public function create()
-    {
-        //
-    }
-
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
-   
-    public function show(Request $id_hogar)
-    {
-        //
-    }
 
   
     public function edit($id_hogar)

@@ -160,7 +160,7 @@ class UserLivewire extends Component
 
         $usuario->update();
         back()->with('data' ,'Actualizado con éxito');
-        return redirect('/usuarios');
+        
     }
 
 

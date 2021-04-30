@@ -18,7 +18,7 @@
                             aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                       
+
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -65,7 +65,7 @@
     </div>
 </div>
 
-    <?php
+<?php
 
                 $valoresy=array();//montos
                 $valoresx=array();//ventas
@@ -133,36 +133,45 @@
                 }
                 //recorrer datos de factura
                 $con=0;
-                $consumoTotalPromedio=0;
-                $consumoTotalsaldo=0;
+                $consumoPromedio=0;
+                $saldoPromedio=0;
+                //$saldoPromedio=0;
                 
-
+               
                 if ($consumoTotal!=0) {
                     foreach ($consumoFactura as $factura){
                     $con=$con+1;
-                    $consumoPromedio=$consumoTotalPromedio+$factura->consumoPromedio;                   
-                    $saldoPromedio=$consumoTotalsaldo+$factura->saldoPromedio; 
-                
+                    $consumoPromedio=$consumoPromedio+$factura->consumoPromedio;                   
+                    $saldoPromedio=$saldoPromedio+$factura->saldoPromedio; 
+
                     }
+                   
+             
                     $consumoPromedio=$consumoPromedio/$con;
-                    $saldoPromedio= $saldoPromedio/$con;
                   
-               }else {
-                $consumoPromedio=0;
-                $saldoPromedio=0;
-                $promedio=0;
-               }
-
-
-               
-              
-                echo("consumo fac ".$consumoPromedio);
-                echo("consumo saldoPromedio ".$saldoPromedio);
-                echo(" consumo pro ".$promedio);
+                    $saldoPromedio= $saldoPromedio/$con;
+                    $consumoPromediototal=$saldoPromedio/$consumoPromedio;
+                    $consumoPromediototal=round($consumoPromediototal, 0);
+                    
+                   
+                  
+                    }else {
+                        $consumoPromedio=0;
+                        $saldoPromedio=0;
+                        $promedio=0;
+                        $saldofactura=0;
+                        $consumoPromediototal=0;
+                    }
+           
                
 ?>
+<br>
+
 <div class="container">
-    {{-- tanque % --}}
+    <br>
+<br>
+ <h5>Nivel de Tanque </h5>
+ <br>
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-info shadow  py-2">
             <div class="card-body">
@@ -191,258 +200,252 @@
             </div>
         </div>
     </div>
+    <br>
+    <hr>
     {{-- fin line tanque --}}
-    <div class="row cards" style="width: auto; margin: auto auto;">
+    <h5 class="text-center">Factura Vs Consumo </h5>
+    <hr>
+    <br>
 
-        <div class="card text-white bg-primary mb-3" style="width: 260px;  margin: 5px; ">
-            <div class="card-header p-3 mb-2 bg-primary text-white">
-                <div class="col-sm-12 d-flex justify-content-center">
-                    <strong class="text-center">Factura</strong>
+    <div class="row cards justify-content-center align-items-center minh-100">
+        <div class="col-xl-4 col-lg-5">
+
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header p-3 mb-2 bg-primary text-white">
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <strong class="text-center">Promedio de factura Mesual</strong>
+                    </div>
                 </div>
+                <div class="card-body">
+                    <strong>Factura </strong>
+                    <p class="card-text">Valor$: {{number_format( $saldoPromedio)}}</p>
 
-            </div>
-            {{-- <div class="card text-white bg-info  mb-3" style="max-width: 18rem;"> --}}
+                    <strong>Agua  </strong>
+                    <p class="card-text">Consumo M<sup>3</sup> : {{$consumoPromedio}}</p>
+                    <p class="card-text">Litros: {{$consumoPromedio*1000}}</p>
+                    <strong>Diario</strong>
+                    <p class="card-text">Consumo M<sup>3</sup> : {{round(($consumoPromedio/30), 2)}}</p>
+                    <p class="card-text">Litros: {{round((($consumoPromedio*1000)/30), 2)}}</p>
+                    <p class="card-text">Promedio por Gifro:  
+                        @isset($numeroGrifos)
+                     {{round(((($consumoPromedio*1000)/30)/$numeroGrifos), 2)}} Litros
+                        @endisset</p>
+                   
 
-            <div class="card-body">
-                {{-- <h5 class="card-title">Consumo Promedio Factura</h5> --}}
-                <strong>Mensual</strong>
-                <p class="card-text">Consumo M<sup>3</sup> : {{$consumoPromedio}}</p>
-                <p class="card-text">Litros: {{$consumoPromedio*1000}}</p>
-                <strong>Diario</strong>
-                <p class="card-text">Consumo M<sup>3</sup> : {{round(($consumoPromedio/30), 2)}}</p>
-                <p class="card-text">Litros: {{round((($consumoPromedio*1000)/30), 2)}}</p>
-                <p class="card-text">Promedio por Gifro</p>
-                @isset($numeroGrifos)
-                <p class="card-text">{{round(((($consumoPromedio*1000)/30)/$numeroGrifos), 2)}}</p>
-                @endisset
-                
-            </div>
-            {{-- </div> --}}
-        </div>
-
-        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-            <div class="card-header p-3 mb-2 bg-info text-white">
-                <div class="col-sm-12 d-flex justify-content-center">
-                    <strong class="text-center">Consumo Ahorrado</strong>
                 </div>
-            </div>
-            <div class="card-body">
-                <strong>Mensual</strong>
-                {{-- <h5 class="card-title">Promedio Consumo Diario </h5> --}}
-                <p class="card-text">Consumo M<sup>3</sup></p>
-                <p class="card-text">
-                    <?php echo($promedio); ?></p>
-                <p class="card-text">Litros</p>
-                <p class="card-text">
-                    <?php echo($promedio); ?> </p>
             </div>
         </div>
-
-        {{-- <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-            <div class="card-header p-3 mb-2 bg-success text-white">
-                
-                <div class="col-sm-12 d-flex justify-content-center">                 
-                    <strong class="text-center">Ahorro Económico</strong>
+        <div class="col-xl-4 col-lg-5">
+            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-header p-3 mb-2 bg-info text-white">
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <strong class="text-center">Consumo Ahorrado H2ome</strong>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <strong>Consumo H2ome  </strong>
+                    {{-- <h5 class="card-title">Promedio Consumo Diario </h5> M<sup>3</sup> --}}
+                    <p class="card-text"> {{$CunsumoH2ome}} Litros </p>
+                    <strong>Valor 1 M<sup>3</sup>   </strong>
+                    <p class="card-text">$ {{number_format($consumoPromediototal)}}</p>
+                     
+                    <p class="card-text">Valor Ahorrado</p>
+                    <p class="card-text">
+                        $ {{number_format(($CunsumoH2ome/1000) * $consumoPromediototal)}} </p>
                 </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">Success card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-            </div>
-        </div> --}}
+        </div>
     </div>
-</div>
 
-<script type="text/javascript">
-    function crearCadenaLineal(json) {
-        var parsed = JSON.parse(json);
-        var arr = [];
+    <script type="text/javascript">
+        function crearCadenaLineal(json) {
+            var parsed = JSON.parse(json);
+            var arr = [];
 
-        for (var x in parsed) {
-            arr.push(parsed[x]);
+            for (var x in parsed) {
+                arr.push(parsed[x]);
+            }
+            return arr;
         }
-        return arr;
-    }
 
-</script>
+    </script>
 
 
-<script type="text/javascript">
-    datosx = crearCadenaLineal('<?php echo $datosx ?>');
-    datosy = crearCadenaLineal('<?php echo $datosy ?>');
+    <script type="text/javascript">
+        datosx = crearCadenaLineal('<?php echo $datosx ?>');
+        datosy = crearCadenaLineal('<?php echo $datosy ?>');
 
 
-    // Set new default font family and font color to mimic Bootstrap's default styling
-    Chart.defaults.global.defaultFontFamily = 'Nunito',
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-    Chart.defaults.global.defaultFontColor = '#858796';
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito',
+            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
 
-    function number_format(number, decimals, dec_point, thousands_sep) {
-        // *     example: number_format(1234.56, 2, ',', ' ');
-        // *     return: '1 234,56'
-        number = (number + '').replace(',', '').replace(' ', '');
-        var n = !isFinite(+number) ? 0 : +number,
-            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-            s = '',
-            toFixedFix = function (n, prec) {
-                var k = Math.pow(10, prec);
-                return '' + Math.round(n * k) / k;
-            };
-        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-        if (s[0].length > 3) {
-            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        function number_format(number, decimals, dec_point, thousands_sep) {
+            // *     example: number_format(1234.56, 2, ',', ' ');
+            // *     return: '1 234,56'
+            number = (number + '').replace(',', '').replace(' ', '');
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                s = '',
+                toFixedFix = function (n, prec) {
+                    var k = Math.pow(10, prec);
+                    return '' + Math.round(n * k) / k;
+                };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
         }
-        if ((s[1] || '').length < prec) {
-            s[1] = s[1] || '';
-            s[1] += new Array(prec - s[1].length + 1).join('0');
-        }
-        return s.join(dec);
-    }
 
-    // Area Chart Example
-    var ctx = document.getElementById("myAreaChartarea");
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: datosx,
-            datasets: [{
-                label: "Mililitros",
-                lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgba(78, 115, 223, 1)",
-                pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
-                pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                pointHitRadius: 10,
-                pointBorderWidth: 2,
-                data: datosy,
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 25,
-                    top: 25,
-                    bottom: 0
-                }
-            },
-            scales: {
-                xAxes: [{
-                    time: {
-                        unit: 'date'
-                    },
-                    gridLines: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    ticks: {
-                        maxTicksLimit: 7
-                    }
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChartarea");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: datosx,
+                datasets: [{
+                    label: "Mililitros",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: datosy,
                 }],
-                yAxes: [{
-                    ticks: {
-                        maxTicksLimit: 5,
-                        padding: 10,
-                        // Include a dollar sign in the ticks
-                        callback: function (value, index, values) {
-                            return '$' + number_format(value);
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
                         }
-                    },
-                    gridLines: {
-                        color: "rgb(234, 236, 244)",
-                        zeroLineColor: "rgb(234, 236, 244)",
-                        drawBorder: false,
-                        borderDash: [2],
-                        zeroLineBorderDash: [2]
-                    }
-                }],
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                intersect: false,
-                mode: 'index',
-                caretPadding: 10,
-                callbacks: {
-                    label: function (tooltipItem, chart) {
-                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function (value, index, values) {
+                                return '$' + number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function (tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 
-</script>
-
-
-<script type="text/javascript">
-    var consumoTotal = ('<?php echo $consumoTotal/1000 ?>');
-    var CunsumoH2ome = ('<?php echo $CunsumoH2ome/1000 ?>');
-    var CunsumoEmpo = ('<?php echo $CunsumoEmpo/1000 ?>');
+    </script>
 
 
-    // Set new default font family and font color to mimic Bootstrap's default styling
-    Chart.defaults.global.defaultFontFamily = 'Nunito',
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-    Chart.defaults.global.defaultFontColor = '#858796';
+    <script type="text/javascript">
+        var consumoTotal = ('<?php echo $consumoTotal/1000 ?>');
+        var CunsumoH2ome = ('<?php echo $CunsumoH2ome/1000 ?>');
+        var CunsumoEmpo = ('<?php echo $CunsumoEmpo/1000 ?>');
 
-    // Pie Chart Example
-    var ctx = document.getElementById("myPieChartCirculo");
-    var myPieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Consumo Total", "Empo", "H2OME"],
-            datasets: [{
-                data: [consumoTotal, CunsumoEmpo, CunsumoH2ome],
-                backgroundColor: ['#4e73df', '#36b9cc', '#1cc88a'],
-                hoverBackgroundColor: ['#2e59d9', '#2c9faf', '#17a673'],
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
+
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito',
+            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        // Pie Chart Example
+        var ctx = document.getElementById("myPieChartCirculo");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Consumo Total", "Empo", "H2OME"],
+                datasets: [{
+                    data: [consumoTotal, CunsumoEmpo, CunsumoH2ome],
+                    backgroundColor: ['#4e73df', '#36b9cc', '#1cc88a'],
+                    hoverBackgroundColor: ['#2e59d9', '#2c9faf', '#17a673'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
             },
-            legend: {
-                display: false
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                legend: {
+                    display: false
+                },
+                cutoutPercentage: 80,
             },
-            cutoutPercentage: 80,
-        },
-    });
+        });
 
-</script>
+    </script>
 
-@endsection
+    @endsection
 
 
-<!-- Page level plugins -->
-<script src="{{ asset('vendor/chart.js/Chart.min.js')}}"></script>
+    <!-- Page level plugins -->
+    <script src="{{ asset('vendor/chart.js/Chart.min.js')}}"></script>

@@ -22,14 +22,12 @@ class ConsumoController extends Controller
       
           $id=$request->get('id_hogar');
 
-
         //consumo promedio factura
             $sqlFactura = 'SELECT id_factura, medidor, codigo, consumoPromedio, (saldoPromedio), 
              fechaFactura,hogar_id FROM facturas WHERE hogar_id='.$id;
            $consumoFactura = DB::select($sqlFactura);
          
-         
-           
+
             $sql = 'SELECT id_consumo, consumo,fechaConsumo,capacidadAlmacenamiento,nivel,administracion_id,
             id_hogar,id_almacenamiento,numeroGrifos,maximo,minimo,media
             FROM
@@ -144,10 +142,6 @@ class ConsumoController extends Controller
          // return view('consumo.index',['estancias' => $estancias, 'hogar' => $hogar, 'dispositivos' => $dispositivos, 'tipoSensores' => $tipoSensores]);
           return view('consumo.index',['consumos' => $consumos,'CunsumoH2ome' => $CunsumoH2ome,
           'CunsumoEmpo' => $CunsumoEmpo, 'consumoFactura' => $consumoFactura]);
-
-        
-      
-
 
     }
     

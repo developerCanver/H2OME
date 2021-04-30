@@ -119,17 +119,10 @@
                 <h2>Mis Datos
                 </h2>
                 @endif
-
             </div>
         </div>
-
     </div>
-
-
-
     <!-- Content here -->
-
-
 
     @if(session('data'))
     <div class="alert alert-success" role="alert">
@@ -140,7 +133,6 @@
         </button>
     </div>
     @endif
-
 
     <table class="table table-striped">
         <thead>
